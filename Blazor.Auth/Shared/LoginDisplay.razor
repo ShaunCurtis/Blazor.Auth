@@ -1,0 +1,12 @@
+﻿<AuthorizeView>
+    <span class="me-2">Hello, @(context.User.Identity?.Name!)</span><button class="btn btn-primary" @onclick=this.LogOut>Log Out</button>
+</AuthorizeView>
+
+@code {
+    [Inject] private AuthenticationStateProvider? authState { get; set; }
+
+    private SimpleAuthenticationStateProvider AuthState => (SimpleAuthenticationStateProvider)authState!;
+
+    private async Task LogOut(MouseEventArgs e)
+        => await AuthState.ChangeIdentityAsync(string.Empty);
+}
